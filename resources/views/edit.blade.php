@@ -19,7 +19,8 @@
 
                         <form action=# method="POST">
                             {{method_field('PUT')}}
-                        {{-- TODO: Protección contra CSRF --}}
+                            {{ csrf_field() }}
+
 
                         <div class="form-group">
                            <label for="title">Título</label>

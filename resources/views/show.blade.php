@@ -11,7 +11,7 @@
             <div class="row"> 
                 <div class="col-sm-4">
                     {{-- TODO: Imagen de la película --}}
-                    <img src="{{$arrayPeliculas['poster']}}"/>
+                    <img src="{{$arrayPeliculas['poster']}}" style="height:400px"/>
                 </div>
                 <div class="col-sm-8">
                     <h3>{{$arrayPeliculas['title']}}</h3> 

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Movie;
+use App\User;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -171,23 +172,45 @@ class DatabaseSeeder extends Seeder
 				'synopsis' => 'Un joven hastiado de su gris y monótona vida lucha contra el insomnio. En un viaje en avión conoce a un carismático vendedor de jabón que sostiene una teoría muy particular: el perfeccionismo es cosa de gentes débiles; sólo la autodestrucción hace que la vida merezca la pena. Ambos deciden entonces fundar un club secreto de lucha, donde poder descargar sus frustaciones y su ira, que tendrá un éxito arrollador.'
 			)
 		);
+	private $arrayUsuarios = array(
+    	array(
+    		'name' => 'usuario1',
+    		'email' => 'usuario1@gmail.com',
+    		'password' => 'usuario1'
+    	),
+    	array(
+    		'name' => 'usuario2',
+    		'email' => 'usuario2@gmail.com',
+    		'password' => 'usuario2'
+    	)
+	);
+	private function seedUsers() {
+		DB::table('users')->delete();
+		foreach( $this->arrayUsuarios as $usuarios ) {
+			$u = new User;
+			$u->name = $usuarios['name'];
+			$u->email = $usuarios['email'];
+			$u->password = bcrypt($usuarios['password']);
+			$u->save();
+		}
+	}
     private function seedCatalog()
     {
     	DB::table('movies')->delete();
     	foreach( $this->arrayPeliculas as $pelicula ) {
-		$p = new Movie;
-		$p->title = $pelicula['title'];
-		$p->year = $pelicula['year'];
-		$p->director = $pelicula['director'];
-		$p->poster = $pelicula['poster'];
-		$p->rented = $pelicula['rented'];
-		$p->synopsis = $pelicula['synopsis'];
-		$p->save();
-		}
+			$p = new Movie;
+			$p->title = $pelicula['title'];
+			$p->year = $pelicula['year'];
+			$p->director = $pelicula['director'];
+			$p->poster = $pelicula['poster'];
+			$p->rented = $pelicula['rented'];
+			$p->synopsis = $pelicula['synopsis'];
+			$p->save();
+			}
     }
-    public function run()
-    {
-        self::seedCatalog();
-		$this->command->info('Tabla catálogo inicializada con datos!');
-    }
+	public function run() {
+		// ... Llamada al seed del catálogo
+		self::seedUsers();
+		$this->command->info('Tabla usuarios inicializada con datos!');
+	}
 }
